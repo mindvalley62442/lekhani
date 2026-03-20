@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Likhavat — Sacred Script Reader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Decorative SVG background -->
+  <div class="mandala-bg" aria-hidden="true">
+    <svg class="mandala mandala-top-right" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.12" fill="none" stroke="#C9A84C" stroke-width="0.8">
+        <circle cx="200" cy="200" r="180"/><circle cx="200" cy="200" r="150"/><circle cx="200" cy="200" r="120"/>
+        <circle cx="200" cy="200" r="90"/><circle cx="200" cy="200" r="60"/><circle cx="200" cy="200" r="30"/>
+        <line x1="200" y1="20" x2="200" y2="380"/><line x1="20" y1="200" x2="380" y2="200"/>
+        <line x1="73" y1="73" x2="327" y2="327"/><line x1="327" y1="73" x2="73" y2="327"/>
+        <line x1="20" y1="130" x2="380" y2="270"/><line x1="130" y1="20" x2="270" y2="380"/>
+        <line x1="380" y1="130" x2="20" y2="270"/><line x1="270" y1="20" x2="130" y2="380"/>
+        <polygon points="200,30 230,90 295,90 245,130 265,195 200,160 135,195 155,130 105,90 170,90" fill="none" stroke="#C9A84C" stroke-width="0.6"/>
+        <polygon points="200,60 220,110 270,110 232,140 248,192 200,165 152,192 168,140 130,110 180,110" fill="none" stroke="#C9A84C" stroke-width="0.4"/>
+        <circle cx="200" cy="200" r="5" fill="#C9A84C" opacity="0.4"/>
+      </g>
+    </svg>
+    <svg class="mandala mandala-bottom-left" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.1" fill="none" stroke="#C9A84C" stroke-width="0.8">
+        <circle cx="200" cy="200" r="180"/><circle cx="200" cy="200" r="150"/><circle cx="200" cy="200" r="120"/>
+        <circle cx="200" cy="200" r="90"/><circle cx="200" cy="200" r="60"/><circle cx="200" cy="200" r="30"/>
+        <line x1="200" y1="20" x2="200" y2="380"/><line x1="20" y1="200" x2="380" y2="200"/>
+        <line x1="73" y1="73" x2="327" y2="327"/><line x1="327" y1="73" x2="73" y2="327"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Ghungroo string decoration -->
+  <div class="ghungroo-strip" aria-hidden="true">
+    <span class="bell">𝅘𝅥𝅮</span><span class="bell">𝅘𝅥𝅮</span><span class="bell">𝅘𝅥𝅮</span>
+    <span class="dot">·</span><span class="dot">·</span><span class="dot">·</span>
+    <span class="bell">𝅘𝅥𝅮</span><span class="bell">𝅘𝅥𝅮</span><span class="bell">𝅘𝅥𝅮</span>
+    <span class="dot">·</span><span class="dot">·</span><span class="dot">·</span>
+    <span class="bell">𝅘𝅥𝅮</span><span class="bell">𝅘𝅥𝅮</span><span class="bell">𝅘𝅥𝅮</span>
+    <span class="dot">·</span><span class="dot">·</span><span class="dot">·</span>
+    <span class="bell">𝅘𝅥𝅮</span><span class="bell">𝅘𝅥𝅮</span><span class="bell">𝅘𝅥𝅮</span>
+    <span class="dot">·</span><span class="dot">·</span><span class="dot">·</span>
+    <span class="bell">𝅘𝅥𝅮</span><span class="bell">𝅘𝅥𝅮</span><span class="bell">𝅘𝅥𝅮</span>
+  </div>
+
+  <header class="site-header">
+    <div class="header-ornament" aria-hidden="true">❋</div>
+    <div class="header-content">
+      <p class="subtitle-top">॥ श्री गणेशाय नमः ॥</p>
+      <h1 class="site-title">Likhavat</h1>
+      <p class="site-tagline"><em>लिखावट</em> &nbsp;·&nbsp; The Art of Sacred Reading</p>
+      <p class="site-desc">Unveil the written word hidden within your scrolls &amp; manuscripts</p>
+    </div>
+    <div class="header-ornament" aria-hidden="true">❋</div>
+  </header>
+
+  <!-- Border motif -->
+  <div class="border-motif" aria-hidden="true">
+    <span>✦</span><span class="line"></span><span>✦</span><span class="line"></span><span>✦</span>
+  </div>
+
+  <main class="container">
+
+    <!-- STEP I: Upload -->
+    <section class="card card--upload" id="section-upload">
+      <div class="card-header">
+        <span class="step-badge">I</span>
+        <h2>Offer Your Manuscript</h2>
+      </div>
+      <div class="card-body">
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-icon" aria-hidden="true">📜</div>
+          <p class="drop-main">Drop your PDF scroll here</p>
+          <p class="drop-sub">or</p>
+          <label class="btn btn--primary" for="pdfInput">Choose Manuscript</label>
+          <input type="file" id="pdfInput" accept="application/pdf" hidden />
+          <p class="drop-hint">PDF files only · Up to 50 MB</p>
+        </div>
+        <div class="file-chosen hidden" id="fileChosen">
+          <span class="file-icon">📄</span>
+          <span class="file-name" id="fileName"></span>
+          <button class="btn-icon remove-file" id="removeFile" title="Remove">✕</button>
+        </div>
+        <div class="upload-action">
+          <button class="btn btn--gold btn--large" id="ocrBtn" disabled>
+            <span class="btn-label">Read the Scroll</span>
+            <span class="btn-sub">Begin OCR</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress -->
+    <div class="progress-wrap hidden" id="progressWrap">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p class="progress-label" id="progressLabel">Preparing…</p>
+    </div>
+
+    <!-- STEP I-B: Direct Text Input (Alternative to OCR) -->
+    <section class="card card--direct" id="section-direct">
+      <div class="card-header">
+        <span class="step-badge">I-B</span>
+        <h2>Paste Text Directly</h2>
+        <span class="badge-optional">Or skip OCR</span>
+      </div>
+      <div class="card-body">
+        <div class="prompt-section">
+          <label for="directText" class="prompt-label">
+            Enter or paste text
+            <span class="prompt-hint">(for Gemini processing without OCR)</span>
+          </label>
+          <textarea id="directText" class="text-editor" rows="8" placeholder="Paste Hindi/English text here to process directly with Gemini…" spellcheck="false"></textarea>
+          <div class="char-count"><span id="directCharCount">0</span> characters</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP II: OCR Result -->
+    <section class="card card--result hidden" id="section-result">
+      <div class="card-header">
+        <span class="step-badge">II</span>
+        <h2>The Revealed Text</h2>
+        <div class="header-actions">
+          <button class="btn btn--sm btn--outline" id="copyOcr">Copy All</button>
+          <button class="btn btn--sm btn--outline" id="clearOcr">Clear</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="editor-wrap">
+          <textarea id="ocrText" class="text-editor" placeholder="The revealed text shall appear here…" spellcheck="false"></textarea>
+          <div class="char-count"><span id="charCount">0</span> characters</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP III: Gemini Summarise -->
+    <section class="card card--gemini hidden" id="section-gemini">
+      <div class="card-header">
+        <span class="step-badge">III</span>
+        <h2>Seek Deeper Meaning</h2>
+        <span class="badge-optional">Optional</span>
+      </div>
+      <div class="card-body">
+        <div class="prompt-section">
+          <label for="geminiPrompt" class="prompt-label">
+            Directive to the Oracle
+            <span class="prompt-hint">(editable)</span>
+          </label>
+          <textarea id="geminiPrompt" class="prompt-editor" rows="4">You are a scholarly Hindi-to-Gujarati explainer. You will receive OCR-extracted Hindi text from a book or chapter.
+
+Your task:
+1. Read the full text carefully and identify the logical sections the author has naturally divided the content into (based on topic shifts, headings, or narrative flow).
+2. For each section, output the following format EXACTLY — no deviations:
+
+---
+
+## વિભાગ [number]: [Section title in Gujarati]
+
+**મૂળ વિષય:** [One line describing what this section is about, in Gujarati]
+
+**સમજૂતી:**
+[Detailed explanation in Gujarati of what the author is conveying in this section — written as if a knowledgeable teacher is explaining the meaning and intent to a student. Minimum 3-4 sentences.]
+
+---
+
+3. After all sections, add a final block:
+
+## સારાંશ
+[A concise overall summary of the entire chapter in Gujarati — 4 to 6 sentences capturing the author's central message.]
+
+Rules you must follow strictly:
+- Never skip the format above. Every section must have all three parts: વિભાગ heading, મૂળ વિષય, and સમજૂતી.
+- Explanation must reflect the author's intended meaning — not a literal word-for-word translation.
+- Language must be formal, clear Gujarati — no mixing of Hindi or English words unless it is a technical term with no Gujarati equivalent.
+- Do not add your own opinions or information beyond what the author has written.
+- Section count should match the author's natural divisions — do not over-fragment or merge unrelated content.</textarea>
+        </div>
+        <button class="btn btn--gold btn--large btn--full" id="geminiBtn">
+          <span class="btn-label">Invoke the Oracle</span>
+          <span class="btn-sub">Summarise with Gemini</span>
+        </button>
+
+
+        <div class="gemini-result hidden" id="geminiResult">
+          <div class="divider-ornament" aria-hidden="true">✦ ✦ ✦</div>
+          <div class="result-header">
+            <h3>Oracle's Wisdom</h3>
+            <button class="btn btn--sm btn--outline" id="copyGemini">Copy</button>
+          </div>
+          <textarea class="text-editor text-editor--readonly" id="geminiText" readonly></textarea>
+          <div class="char-count"><span id="geminiCharCount">0</span> characters</div>
+        </div>
+
+        <div class="download-section">
+          <label for="docTitle" class="prompt-label">
+            Document Title
+            <span class="prompt-hint">(optional, defaults to 'અધ્યાય')</span>
+          </label>
+          <div class="doc-title-wrap">
+            <span class="doc-icon" aria-hidden="true">📝</span>
+            <input type="text" id="docTitle" class="title-input" placeholder="Enter title for the Word document" />
+          </div>
+          <button class="btn btn--primary btn--large btn--full" id="downloadBtn">
+            <span class="btn-label">Download as Word Document</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div class="toast hidden" id="toast"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-ornament" aria-hidden="true">
+      <span>✦</span><span class="line-sm"></span>
+      <span class="om">ॐ</span>
+      <span class="line-sm"></span><span>✦</span>
+    </div>
+    <p>Crafted in reverence for the art of Kathak · Nritya, Natya, Nritta</p>
+    <p class="footer-sub">तत त्वं असि — Thou art That</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
