@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────
-//  Likhavat · server.js
+//  Lekhani · server.js
 //  Uses official @mistralai/mistralai SDK for OCR
 //  (avoids node-fetch connection issues on Windows)
 // ─────────────────────────────────────────────────────────
@@ -230,7 +230,7 @@ Rules you must follow strictly:
 
 // ── Start ────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`\n  ✦ Likhavat is running → http://localhost:${PORT}\n`);
+  console.log(`\n  ✦ Lekhani is running → http://localhost:${PORT}\n`);
 });
 
 // ────────────────────────────────────────────────────────
@@ -244,7 +244,7 @@ app.post('/api/download', async (req, res) => {
 
   try {
     const buffer = await buildKathakDoc(text, title || 'અધ્યાય');
-    const filename = `likhavat-${Date.now()}.docx`;
+    const filename = `lekhani-${Date.now()}.docx`;
 
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);

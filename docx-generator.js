@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────
-//  Likhavat · docx-generator.js
+//  Lekhani · docx-generator.js
 //  Parses fixed Gemini output format and builds a
 //  Kathak-themed .docx with Cambria font, A4 page size
 // ─────────────────────────────────────────────────────────
@@ -133,7 +133,7 @@ async function buildKathakDoc(geminiText, chapterTitle = 'અધ્યાય') {
         alignment: AlignmentType.CENTER,
         children: [
           new TextRun({ text: '॥ ', font: FONT, size: 20, color: C.gold }),
-          new TextRun({ text: 'Likhavat · લિખાવટ', font: FONT, size: 20, bold: true, color: C.crimson }),
+          new TextRun({ text: 'Lekhani · લેખની', font: FONT, size: 20, bold: true, color: C.crimson }),
           new TextRun({ text: ' ॥', font: FONT, size: 20, color: C.gold }),
         ]
       })
@@ -166,7 +166,7 @@ async function buildKathakDoc(geminiText, chapterTitle = 'અધ્યાય') {
       border: { bottom: goldBorder(12) },
       children: [
         new TextRun({ text: '✦', font: FONT, size: 28, color: C.gold }),
-        new TextRun({ text: '  Likhavat  ', font: FONT, size: 28, bold: true, color: C.crimson }),
+        new TextRun({ text: '  Lekhani  ', font: FONT, size: 28, bold: true, color: C.crimson }),
         new TextRun({ text: '✦', font: FONT, size: 28, color: C.gold }),
       ]
     }),

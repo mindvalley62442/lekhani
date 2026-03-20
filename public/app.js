@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────
-   Likhavat · public/app.js
+   Lekhani · public/app.js
    Frontend only — all API calls go through the local
    Express server. No keys ever touch the browser.
 ───────────────────────────────────────────────────────── */
@@ -213,7 +213,7 @@
       const url      = URL.createObjectURL(blob);
       const a        = document.createElement('a');
       a.href         = url;
-      a.download     = `likhavat-${Date.now()}.docx`;
+      a.download     = `lekhani-${Date.now()}.docx`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
