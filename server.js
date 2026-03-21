@@ -10,6 +10,7 @@ const multer   = require('multer');
 const fetch    = require('node-fetch');
 const path     = require('path');
 const helmet   = require('helmet');
+const cors     = require('cors');
 const rateLimit = require('express-rate-limit');
 const { Mistral } = require('@mistralai/mistralai');
 const { buildKathakDoc } = require('./docx-generator');
@@ -17,8 +18,23 @@ const { buildKathakDoc } = require('./docx-generator');
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
-// Environment
-const isProduction = process.env.NODE_ENV === 'production';
+// Environment - Vercel sets VERCEL=1 in production
+const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+
+// CORS configuration - CRITICAL for production deployment
+// Allow requests from any origin in production (Vercel domain will differ from API)
+app.use(cors({
+  origin: isProduction ? true : 'http://localhost:3000',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true
+}));
+
+// Log all requests for debugging
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} | Origin: ${req.headers.origin || 'none'} | IP: ${req.ip}`);
+  next();
+});
 
 // Security middleware
 app.use(helmet({
@@ -33,10 +49,10 @@ app.use(helmet({
   },
 }));
 
-// Rate limiting
+// Rate limiting - increased for better mobile compatibility
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // limit each IP to 10 requests per windowMs
+  max: isProduction ? 30 : 10, // 30 requests per 15 min in production (mobile-friendly)
   message: { error: 'Too many requests, please try again later' },
   standardHeaders: true,
   legacyHeaders: false,

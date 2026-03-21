@@ -117,15 +117,39 @@
   // ── OCR ──────────────────────────────────────────────────
   ocrBtn.addEventListener('click', runOCR);
 
+  // Helper: fetch with timeout for slow mobile networks
+  async function fetchWithTimeout(url, options, timeoutMs = 120000) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(url, { ...options, signal: controller.signal });
+      clearTimeout(timeout);
+      return response;
+    } catch (err) {
+      clearTimeout(timeout);
+      if (err.name === 'AbortError') {
+        throw new Error('Request timed out - please try a smaller PDF or check your connection');
+      }
+      // Provide more helpful error messages
+      if (err.message === 'Failed to fetch') {
+        throw new Error('Network error - check your internet connection');
+      }
+      throw err;
+    }
+  }
+
   async function runOCR() {
     if (!selectedFile) { showToast('Please select a PDF file'); return; }
     setLoading(true, 'Offering the manuscript…', 5);
+    console.log('[OCR] Starting - File size:', selectedFile.size, 'bytes');
     try {
       setProgress(20, 'Uploading the scroll…');
       const formData = new FormData();
       formData.append('pdf', selectedFile, selectedFile.name);
       setProgress(50, 'Reading the sacred text…');
-      const res  = await fetch('/api/ocr', { method: 'POST', body: formData });
+      console.log('[OCR] Sending request to /api/ocr');
+      const res  = await fetchWithTimeout('/api/ocr', { method: 'POST', body: formData }, 120000);
+      console.log('[OCR] Response status:', res.status);
       setProgress(85, 'Gathering the revealed words…');
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `Server error (${res.status})`);
@@ -139,7 +163,7 @@
       sectionResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
       showToast('The scroll has been read ✦');
     } catch (err) {
-      console.error(err);
+      console.error('[OCR Error]', err);
       showToast('Error: ' + (err.message || 'Something went wrong'));
     } finally {
       setLoading(false);
