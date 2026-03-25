@@ -63,7 +63,7 @@
   function handleFile(file) {
     if (!file) return;
     if (file.type !== 'application/pdf') { showToast('Only PDF files are accepted 📜'); return; }
-    if (file.size > 50 * 1024 * 1024)   { showToast('File too large — max 50 MB'); return; }
+    if (file.size > 4 * 1024 * 1024)   { showToast('File too large — max 4 MB (Vercel limit)'); return; }
     selectedFile = file;
     fileName.textContent = file.name;
     fileChosen.classList.remove('hidden');
@@ -151,7 +151,19 @@
       const res  = await fetchWithTimeout('/api/ocr', { method: 'POST', body: formData }, 120000);
       console.log('[OCR] Response status:', res.status);
       setProgress(85, 'Gathering the revealed words…');
-      const data = await res.json();
+      
+      // Check content-type to handle non-JSON responses (like Vercel HTML errors)
+      const contentType = res.headers.get('content-type') || '';
+      let data;
+      if (contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        // Vercel returned HTML error page - extract error message
+        const text = await res.text();
+        console.error('[OCR] Non-JSON response:', text.substring(0, 200));
+        throw new Error('Server error - file may be too large for Vercel (max 4MB)');
+      }
+      
       if (!res.ok) throw new Error(data.error || `Server error (${res.status})`);
       setProgress(100, 'Complete ✦');
       await sleep(500);

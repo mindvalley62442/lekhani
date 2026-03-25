@@ -65,10 +65,10 @@ app.use('/api/', apiLimiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Multer — keep PDF in memory (max 50 MB)
+// Multer — keep PDF in memory (max 4 MB for Vercel compatibility)
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 50 * 1024 * 1024 },
+  limits: { fileSize: 4 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     // Check MIME type
     if (file.mimetype !== 'application/pdf') {
